@@ -1,3 +1,5 @@
+import { AuthForm } from "@/components/auth-form";
+
 export default function SignInPage() {
-  return <div>Hello from SignIn</div>;
+  return <AuthForm type="sign-in" />;
 }
