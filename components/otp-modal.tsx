@@ -19,7 +19,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
-import { verifySecret } from "@/lib/actions/user.actions";
+import { sendEmailOTP, verifySecret } from "@/lib/actions/user.actions";
 
 export function OTPModal({
   accountId,
@@ -49,7 +49,9 @@ export function OTPModal({
     }
   };
 
-  const handleResendOtp = async () => {};
+  const handleResendOtp = async () => {
+    await sendEmailOTP({ email });
+  };
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>

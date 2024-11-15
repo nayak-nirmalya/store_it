@@ -144,7 +144,7 @@ export function AuthForm({ type }: { type: FormType }) {
             </Link>
           </div>
         </form>
-        {true && (
+        {accountId && (
           <OTPModal email={form.getValues("email")} accountId={accountId} />
         )}
       </Form>

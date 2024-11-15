@@ -32,7 +32,7 @@ const getUserByEmail = async ({ email }: { email: string }) => {
   return result.total > 0 ? result.documents[0] : null;
 };
 
-const sendEmailOTP = async ({ email }: { email: string }) => {
+export const sendEmailOTP = async ({ email }: { email: string }) => {
   const { account } = await createAdminClient();
 
   try {
