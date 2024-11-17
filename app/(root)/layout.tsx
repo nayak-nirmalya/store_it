@@ -1,17 +1,24 @@
 import React from "react";
+import { redirect } from "next/navigation";
 
 import { Sidebar } from "@/components/sidebar";
 import { MobileNavigation } from "@/components/mobile-navigation";
 import { Header } from "@/components/header";
 
-export default function RootLayout({
+import { getCurrentUser } from "@/lib/actions/user.actions";
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) return redirect("/sign-in");
+
   return (
     <main className="flex h-screen">
-      <Sidebar />
+      <Sidebar {...currentUser} />
       <section className="flex h-full flex-1 flex-col">
         <MobileNavigation />
         <Header />

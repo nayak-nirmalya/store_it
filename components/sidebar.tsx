@@ -4,10 +4,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { avatarPlaceholderUrl, navItems } from "@/constants";
+import { navItems } from "@/constants";
 import { cn } from "@/lib/utils";
 
-export function Sidebar() {
+export function Sidebar({
+  fullName,
+  avatar,
+  email,
+}: {
+  fullName: string;
+  avatar: string;
+  email: string;
+}) {
   const pathname = usePathname();
 
   return (
@@ -63,12 +71,16 @@ export function Sidebar() {
       />
       <div className="sidebar-user-info">
         <Image
-          src={avatarPlaceholderUrl}
+          src={avatar}
           alt="avatar"
           width={44}
           height={44}
           className="sidebar-user-avatar"
         />
+        <div className="hidden lg:block">
+          <p className="subtitle-2 capitalize">{fullName}</p>
+          <p className="caption">{email}</p>
+        </div>
       </div>
     </aside>
   );
