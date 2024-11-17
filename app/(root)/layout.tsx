@@ -1,5 +1,9 @@
 import React from "react";
 
+import { Sidebar } from "@/components/sidebar";
+import { MobileNavigation } from "@/components/mobile-navigation";
+import { Header } from "@/components/header";
+
 export default function RootLayout({
   children,
 }: {
@@ -7,9 +11,10 @@ export default function RootLayout({
 }) {
   return (
     <main className="flex h-screen">
-      Sidebar
+      <Sidebar />
       <section className="flex h-full flex-1 flex-col">
-        Mobile Navigation Header
+        <MobileNavigation />
+        <Header />
         <div className="main-content">{children}</div>
       </section>
     </main>
