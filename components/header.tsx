@@ -1,8 +1,10 @@
 import Image from "next/image";
 
-import { Button } from "./ui/button";
-import { Search } from "./search";
-import { FileUploader } from "./file-uploader";
+import { signOutUser } from "@/lib/actions/user.actions";
+
+import { Button } from "@/components/ui/button";
+import { Search } from "@/components/search";
+import { FileUploader } from "@/components/file-uploader";
 
 export function Header() {
   return (
@@ -10,7 +12,13 @@ export function Header() {
       <Search />
       <div className="header-wrapper">
         <FileUploader />
-        <form>
+        <form
+          action={async () => {
+            "use server";
+
+            await signOutUser();
+          }}
+        >
           <Button type="submit" className="sign-out-button">
             <Image
               src="/assets/icons/logout.svg"

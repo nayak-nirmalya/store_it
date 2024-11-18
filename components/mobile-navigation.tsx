@@ -12,9 +12,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { FileUploader } from "@/components/file-uploader";
 
 import { navItems } from "@/constants";
 import { cn } from "@/lib/utils";
+import { signOutUser } from "@/lib/actions/user.actions";
 
 export function MobileNavigation({
   ownerId,
@@ -93,6 +96,23 @@ export function MobileNavigation({
               ))}
             </ul>
           </nav>
+          <Separator className="my-5 bg-light-200/20" />
+          <div className="flex flex-col justify-between gap-5 pb-5">
+            <FileUploader />
+            <Button
+              type="submit"
+              className="mobile-sign-out-button"
+              onClick={async () => await signOutUser()}
+            >
+              <Image
+                src="/assets/icons/logout.svg"
+                alt="logo"
+                width={24}
+                height={24}
+              />
+              <p>Logout</p>
+            </Button>
+          </div>
         </SheetContent>
       </Sheet>
     </header>
