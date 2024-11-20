@@ -5,8 +5,9 @@ import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
+import { Thumbnail } from "@/components/thumbnail";
 
-import { cn, getFileType } from "@/lib/utils";
+import { cn, convertFileToUrl, getFileType } from "@/lib/utils";
 
 export function FileUploader({
   accountId,
@@ -19,7 +20,9 @@ export function FileUploader({
 }) {
   const [files, setFiles] = useState<File[]>([]);
 
-  const onDrop = useCallback((acceptedFiles) => {}, []);
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
+    setFiles(acceptedFiles);
+  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
@@ -39,7 +42,22 @@ export function FileUploader({
         <ul className="uploader-preview-list">
           <h4 className="h4 text-light-100">Uploading</h4>
           {files.map((file, index) => {
-            const {} = getFileType(file.name);
+            const { type, extension } = getFileType(file.name);
+
+            return (
+              <li
+                key={`${file.name}-${index}`}
+                className="uploader-preview-item"
+              >
+                <div className="flex items-center gap-3">
+                  <Thumbnail
+                    type={type}
+                    extension={extension}
+                    url={convertFileToUrl(file)}
+                  />
+                </div>
+              </li>
+            );
           })}
         </ul>
       )}
