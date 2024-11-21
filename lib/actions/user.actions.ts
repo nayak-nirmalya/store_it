@@ -5,21 +5,9 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { avatarPlaceholderUrl } from "@/constants";
-import { parseStringify } from "@/lib/utils";
-
-import { createAdminClient, createSessionClient } from "../appwrite";
-import { appwriteConfig } from "../appwrite/config";
-
-const handleError = ({
-  error,
-  message,
-}: {
-  error: unknown;
-  message: string;
-}) => {
-  console.error(error, message);
-  throw error;
-};
+import { parseStringify, handleError } from "@/lib/utils";
+import { createAdminClient, createSessionClient } from "@/lib/appwrite";
+import { appwriteConfig } from "@/lib/appwrite/config";
 
 const getUserByEmail = async ({ email }: { email: string }) => {
   const { databases } = await createAdminClient();

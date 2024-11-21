@@ -27,7 +27,7 @@ export function FileUploader({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const handleRemoveFile = (
-    ev: React.MouseEvent<HTMLImageElement>,
+    ev: React.MouseEvent<HTMLImageElement, MouseEvent>,
     fileName: string
   ) => {
     ev.stopPropagation();
