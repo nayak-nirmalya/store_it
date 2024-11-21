@@ -26,6 +26,15 @@ export function FileUploader({
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
+  const handleRemoveFile = (
+    ev: React.MouseEvent<HTMLImageElement>,
+    fileName: string
+  ) => {
+    ev.stopPropagation();
+
+    setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
+  };
+
   return (
     <div {...getRootProps()} className="cursor-pointer">
       <input {...getInputProps()} />
@@ -55,7 +64,23 @@ export function FileUploader({
                     extension={extension}
                     url={convertFileToUrl(file)}
                   />
+                  <div className="preview-item-name">
+                    {file.name}
+                    <Image
+                      src="/assets/icons/file-loader.gif"
+                      alt="loader"
+                      width={80}
+                      height={26}
+                    />
+                  </div>
                 </div>
+                <Image
+                  src="/assets/icons/remove.svg"
+                  alt="remove"
+                  width={24}
+                  height={24}
+                  onClick={(ev) => handleRemoveFile(ev, file.name)}
+                />
               </li>
             );
           })}

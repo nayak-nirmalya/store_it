@@ -1,6 +1,8 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+type FileType = "document" | "image" | "video" | "audio" | "other";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
