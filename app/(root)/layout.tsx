@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { Sidebar } from "@/components/sidebar";
 import { MobileNavigation } from "@/components/mobile-navigation";
 import { Header } from "@/components/header";
+import { Toaster } from "@/components/ui/toaster";
 
 import { getCurrentUser } from "@/lib/actions/user.actions";
 
@@ -24,6 +25,7 @@ export default async function RootLayout({
         <Header />
         <div className="main-content">{children}</div>
       </section>
+      <Toaster />
     </main>
   );
 }

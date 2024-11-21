@@ -7,7 +7,9 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Thumbnail } from "@/components/thumbnail";
 
+import { useToast } from "@/hooks/use-toast";
 import { cn, convertFileToUrl, getFileType } from "@/lib/utils";
+import { MAX_FILE_SIZE } from "@/constants";
 
 export function FileUploader({
   accountId,
@@ -18,10 +20,28 @@ export function FileUploader({
   accountId: string;
   className?: string;
 }) {
+  const { toast } = useToast();
+
   const [files, setFiles] = useState<File[]>([]);
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     setFiles(acceptedFiles);
+
+    const uploadPromises = acceptedFiles.map(async (file) => {
+      if (file.size > MAX_FILE_SIZE) {
+        setFiles((prevFiles) => prevFiles.filter((f) => f.name !== file.name));
+
+        return toast({
+          description: (
+            <p className="body-2 text-white">
+              <span className="font-semibold">{file.name}</span> is too large.
+              Max file size is 50MB.
+            </p>
+          ),
+          className: "error-toast",
+        });
+      }
+    });
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -85,11 +105,6 @@ export function FileUploader({
             );
           })}
         </ul>
-      )}
-      {isDragActive ? (
-        <p>Drop the files here ...</p>
-      ) : (
-        <p>Drag &apos;n&apos; drop some files here, or click to select files</p>
       )}
     </div>
   );
