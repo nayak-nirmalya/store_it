@@ -1,7 +1,9 @@
+import { Models } from "node-appwrite";
+
 import { Sort } from "@/components/sort";
+import { Card } from "@/components/card";
 
 import { getFiles } from "@/lib/actions/file.actions";
-import { Models } from "node-appwrite";
 
 export default async function Page({
   params,
@@ -30,9 +32,7 @@ export default async function Page({
       {files.total > 0 ? (
         <section className="file-list">
           {files.documents.map((file: Models.Document) => (
-            <h1 key={file.$id} className="h1">
-              {file.name}
-            </h1>
+            <Card key={file.$id} file={file} />
           ))}
         </section>
       ) : (
