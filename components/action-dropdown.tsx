@@ -3,6 +3,7 @@
 import { Models } from "node-appwrite";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import {
@@ -21,10 +22,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 import { actionsDropdownItems } from "@/constants";
 import { constructDownloadUrl } from "@/lib/utils";
-import { Button } from "./ui/button";
+import { renameFile } from "@/lib/actions/file.actions";
 
 type ActionType = {
   label: string;
@@ -33,6 +35,8 @@ type ActionType = {
 };
 
 export function ActionDropdown({ file }: { file: Models.Document }) {
+  const path = usePathname();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [action, setAction] = useState<ActionType | null>(null);
@@ -46,7 +50,30 @@ export function ActionDropdown({ file }: { file: Models.Document }) {
     setName(file.name);
   };
 
-  const handleActions = async () => {};
+  const handleAction = async () => {
+    if (!action) return;
+
+    setIsLoading(true);
+
+    let success = false;
+    const actions = {
+      rename: () =>
+        renameFile({
+          fileId: file.$id,
+          name,
+          extension: file.extension,
+          path,
+        }),
+      share: () => console.log("share"),
+      delete: () => console.log("delete"),
+    };
+
+    success = await actions[action.value as keyof typeof actions]();
+
+    if (success) closeAllModals();
+
+    setIsLoading(false);
+  };
 
   const renderDialogContent = () => {
     if (!action) return null;
@@ -69,8 +96,10 @@ export function ActionDropdown({ file }: { file: Models.Document }) {
         </DialogHeader>
         {["rename", "delete", "share"].includes(value) && (
           <DialogFooter className="flex flex-col gap-3 md:flex-row">
-            <Button>Cancel</Button>
-            <Button>
+            <Button onClick={closeAllModals} className="modal-cancel-button">
+              Cancel
+            </Button>
+            <Button onClick={handleAction} className="modal-submit-button">
               <p className="capitalize">{value}</p>
               {isLoading && (
                 <Image
