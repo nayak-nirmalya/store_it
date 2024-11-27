@@ -3,6 +3,8 @@ import { Models } from "node-appwrite";
 import { Thumbnail } from "@/components/thumbnail";
 import { FormattedDateTime } from "@/components/formatted-datetime";
 
+import { convertFileSize } from "@/lib/utils";
+
 function ImageThumbnail({ file }: { file: Models.Document }) {
   return (
     <div className="file-details-thumbnail">
@@ -28,6 +30,9 @@ export function FileDetails({ file }: { file: Models.Document }) {
   return (
     <>
       <ImageThumbnail file={file} />
+      <DetailRow label="Format:" value={file.extension} />
+      <DetailRow label="Size:" value={convertFileSize(file.size)} />
+      <DetailRow label="Format:" value={file.extension} />
       <DetailRow label="Format:" value={file.extension} />
     </>
   );
