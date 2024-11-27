@@ -32,8 +32,8 @@ export function FileDetails({ file }: { file: Models.Document }) {
       <ImageThumbnail file={file} />
       <DetailRow label="Format:" value={file.extension} />
       <DetailRow label="Size:" value={convertFileSize(file.size)} />
-      <DetailRow label="Format:" value={file.extension} />
-      <DetailRow label="Format:" value={file.extension} />
+      <DetailRow label="Owner:" value={file.owner.fullName} />
+      <DetailRow label="Last Edit:" value={file.$updatedAt} />
     </>
   );
 }
