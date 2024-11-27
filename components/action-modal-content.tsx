@@ -3,7 +3,7 @@ import { Models } from "node-appwrite";
 import { Thumbnail } from "@/components/thumbnail";
 import { FormattedDateTime } from "@/components/formatted-datetime";
 
-import { convertFileSize } from "@/lib/utils";
+import { convertFileSize, formatDateTime } from "@/lib/utils";
 
 function ImageThumbnail({ file }: { file: Models.Document }) {
   return (
@@ -20,8 +20,8 @@ function ImageThumbnail({ file }: { file: Models.Document }) {
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex">
-      <p className="file-details-label">{label}</p>
-      <p className="file-details-value">{value}</p>
+      <p className="file-details-label text-left">{label}</p>
+      <p className="file-details-value text-left">{value}</p>
     </div>
   );
 }
@@ -30,10 +30,12 @@ export function FileDetails({ file }: { file: Models.Document }) {
   return (
     <>
       <ImageThumbnail file={file} />
-      <DetailRow label="Format:" value={file.extension} />
-      <DetailRow label="Size:" value={convertFileSize(file.size)} />
-      <DetailRow label="Owner:" value={file.owner.fullName} />
-      <DetailRow label="Last Edit:" value={file.$updatedAt} />
+      <div className="space-y-4 px-2 pt-2">
+        <DetailRow label="Format:" value={file.extension} />
+        <DetailRow label="Size:" value={convertFileSize(file.size)} />
+        <DetailRow label="Owner:" value={file.owner.fullName} />
+        <DetailRow label="Last Edit:" value={formatDateTime(file.$updatedAt)} />
+      </div>
     </>
   );
 }
