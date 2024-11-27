@@ -15,10 +15,20 @@ function ImageThumbnail({ file }: { file: Models.Document }) {
   );
 }
 
+function DetailRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex">
+      <p className="file-details-label">{label}</p>
+      <p className="file-details-value">{value}</p>
+    </div>
+  );
+}
+
 export function FileDetails({ file }: { file: Models.Document }) {
   return (
     <>
       <ImageThumbnail file={file} />
+      <DetailRow label="Format:" value={file.extension} />
     </>
   );
 }
