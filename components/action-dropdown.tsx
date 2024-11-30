@@ -44,6 +44,7 @@ export function ActionDropdown({ file }: { file: Models.Document }) {
   const [action, setAction] = useState<ActionType | null>(null);
   const [name, setName] = useState(file.name);
   const [isLoading, setIsLoading] = useState(false);
+  const [emails, setEmails] = useState([]);
 
   const closeAllModals = () => {
     setIsModalOpen(false);
@@ -77,6 +78,8 @@ export function ActionDropdown({ file }: { file: Models.Document }) {
     setIsLoading(false);
   };
 
+  const handleRemoveUser = () => {};
+
   const renderDialogContent = () => {
     if (!action) return null;
 
@@ -95,8 +98,14 @@ export function ActionDropdown({ file }: { file: Models.Document }) {
               onChange={(ev) => setName(ev.target.value)}
             />
           )}
-          {value === "share" && <ShareInput />}
           {value === "details" && <FileDetails file={file} />}
+          {value === "share" && (
+            <ShareInput
+              file={file}
+              onInputChange={setEmails}
+              onRemove={handleRemoveUser}
+            />
+          )}
         </DialogHeader>
         {["rename", "delete", "share"].includes(value) && (
           <DialogFooter className="flex flex-col gap-3 md:flex-row">
