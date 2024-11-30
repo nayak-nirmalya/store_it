@@ -79,7 +79,10 @@ export function ShareInput({
                 key={email}
               >
                 <p className="subtitle-2">{email}</p>
-                <Button onClick={() => onRemove(email)}>
+                <Button
+                  onClick={() => onRemove(email)}
+                  className="share-remove-user"
+                >
                   <Image
                     src="/assets/icons/remove.svg"
                     alt="remove"

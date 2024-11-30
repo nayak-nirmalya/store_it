@@ -27,7 +27,7 @@ import { FileDetails, ShareInput } from "@/components/actions-modal-content";
 
 import { actionsDropdownItems } from "@/constants";
 import { constructDownloadUrl } from "@/lib/utils";
-import { renameFile } from "@/lib/actions/file.actions";
+import { renameFile, updateFileUsers } from "@/lib/actions/file.actions";
 
 type ActionType = {
   label: string;
@@ -66,7 +66,7 @@ export function ActionDropdown({ file }: { file: Models.Document }) {
           extension: file.extension,
           path,
         }),
-      share: () => console.log("share"),
+      share: () => updateFileUsers({ fileId: file.$id, emails, path }),
       delete: () => console.log("delete"),
     };
 
