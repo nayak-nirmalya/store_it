@@ -39,3 +39,19 @@ export function FileDetails({ file }: { file: Models.Document }) {
     </>
   );
 }
+
+export function ShareInput({
+  file,
+  onInputChange,
+  onRemove,
+}: {
+  file: Models.Document;
+  onInputChange: React.Dispatch<React.SetStateAction<string[]>>;
+  onRemove: (email: string) => void;
+}) {
+  return (
+    <>
+      <ImageThumbnail file={file} />
+    </>
+  );
+}

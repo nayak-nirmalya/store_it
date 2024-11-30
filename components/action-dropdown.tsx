@@ -23,8 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FileDetails } from "@/components/action-modal-content";
-import { ShareInput } from "@/components/share-input";
+import { FileDetails, ShareInput } from "@/components/actions-modal-content";
 
 import { actionsDropdownItems } from "@/constants";
 import { constructDownloadUrl } from "@/lib/utils";
