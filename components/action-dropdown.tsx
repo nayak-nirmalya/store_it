@@ -24,6 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FileDetails } from "@/components/action-modal-content";
+import { ShareInput } from "@/components/share-input";
 
 import { actionsDropdownItems } from "@/constants";
 import { constructDownloadUrl } from "@/lib/utils";
@@ -94,6 +95,7 @@ export function ActionDropdown({ file }: { file: Models.Document }) {
               onChange={(ev) => setName(ev.target.value)}
             />
           )}
+          {value === "share" && <ShareInput />}
           {value === "details" && <FileDetails file={file} />}
         </DialogHeader>
         {["rename", "delete", "share"].includes(value) && (
