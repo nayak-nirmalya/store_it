@@ -8,14 +8,18 @@ import { getFileTypesParams } from "@/lib/utils";
 
 export default async function Page({
   params,
+  searchParams,
 }: {
   params: Promise<{ type: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const type = (await params)?.type || "";
+  const searchText = ((await searchParams)?.query as string) || "";
+  const sort = ((await searchParams)?.sort as string) || "";
 
   const types = getFileTypesParams(type) as FileType[];
 
-  const files = await getFiles({ types });
+  const files = await getFiles({ types, searchText, sort });
 
   return (
     <div className="page-container">
