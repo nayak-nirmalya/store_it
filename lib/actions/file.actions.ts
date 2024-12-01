@@ -155,3 +155,31 @@ export const updateFileUsers = async ({
     handleError({ error, message: "Failed to update file with users" });
   }
 };
+
+export const deleteFile = async ({
+  fileId,
+  bucketFileId,
+  path,
+}: {
+  fileId: string;
+  bucketFileId: string;
+  path: string;
+}) => {
+  const { databases, storage } = await createAdminClient();
+
+  try {
+    const deletedFile = await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.filesCollectionId,
+      fileId
+    );
+
+    if (deletedFile) {
+      await storage.deleteFile(appwriteConfig.bucketId, bucketFileId);
+    }
+    revalidatePath(path);
+    return parseStringify({ status: "success" });
+  } catch (error) {
+    handleError({ error, message: "Failed to delete file" });
+  }
+};
