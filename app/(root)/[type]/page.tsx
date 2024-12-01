@@ -4,6 +4,7 @@ import { Sort } from "@/components/sort";
 import { Card } from "@/components/card";
 
 import { getFiles } from "@/lib/actions/file.actions";
+import { getFileTypesParams } from "@/lib/utils";
 
 export default async function Page({
   params,
@@ -12,7 +13,9 @@ export default async function Page({
 }) {
   const type = (await params)?.type || "";
 
-  const files = await getFiles();
+  const types = getFileTypesParams(type) as FileType[];
+
+  const files = await getFiles({ types });
 
   return (
     <div className="page-container">
