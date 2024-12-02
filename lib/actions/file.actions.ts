@@ -100,7 +100,7 @@ export const getFiles = async ({
   sort = "$createdAt-desc",
   limit,
 }: {
-  types: FileType[];
+  types?: FileType[];
   searchText?: string;
   sort?: string;
   limit?: number;
